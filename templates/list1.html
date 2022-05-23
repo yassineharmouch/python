@@ -1,0 +1,123 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">CRUD</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    CRUD List
+                    <a  class="btn btn-sm btn-success" href="{% url 'create1' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+                </div>
+                <div class="card-body">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                               <th>Date</th>
+
+                                <th>mode de tir</th>
+                                <th>type de tir</th>
+                                <th>mode de charge</th>
+                                <th>niveau</th>
+                                <th>panneau</th>
+                                <th>largeur</th>
+                                <th>nbr de trou/range</th>
+                                <th>tranche</th>
+                                <th>profondeur</th>
+                                <th>dossage</th>
+                                <th>nbr trou</th>
+                                <th>maille</th>
+                                 <th>longueur</th>
+                                <th>nbr range</th>
+
+                                 <th>raccord42ms</th>
+                                 <th>raccord25ms</th>
+                                 <th>raccord17ms</th>
+                                 <th>ligne de tir</th>
+                                 <th>mf</th>
+                                 <th>deto500ms</th>
+                                 <th>surface</th>
+                                 <th>volume</th>
+
+                                 <th>Ammonix</th>
+                                 <th>tovex</th>
+                                 <th>dosage_r</th>
+                                 <th>repartition</th>
+                                 <th>ci</th>
+
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for fouration in fourations %}
+                                <tr>
+                                    <td>{{ fouration.created_at  |date:"d-m-Y H:i:s" }}</td>
+                                    <td>{{ fouration.mode_tir }}</td>
+                                    <td>{{ fouration.type_tir }}</td>
+                                    <td>{{ fouration.mode_charge }}</td>
+                                    <td>{{ fouration.niveau }}</td>
+                                    <td>{{ fouration.panneau }}</td>
+                                    <td>{{ fouration.largeur }}</td>
+                                    <td>{{ fouration.nbr_trou_range }}</td>
+                                    <td>{{ fouration.tranche }}</td>
+                                    <td>{{ fouration.profondeur }}</td>
+                                    <td>{{ fouration.dossage }}</td>
+                                    <td>{{ fouration.nbr_trou }}</td>
+                                    <td>{{ fouration.maille }}</td>
+                                    <td>{{ fouration.longueur }}</td>
+                                    <td>{{ fouration.nbr_range }}</td>
+
+                                <td>{{ fouration.raccord42ms }}</td>
+                                <td>{{ fouration.raccord25ms }}</td>
+                                <td>{{ fouration.raccord17ms }}</td>
+                                <td>{{ fouration.ligne_tir }}</td>
+                                <td>{{ fouration.mf }}</td>
+                                <td>{{ fouration.deto500 }}</td>
+                                <td>{{ fouration.surface }}</td>
+                                <td>{{ fouration.volume }}</td>
+
+                                 <td>{{ fouration.ammonix }}</td>
+                                <td>{{ fouration.tovex }}</td>
+                                <td>{{ fouration.dosage_r }}</td>
+                                <td>{{ fouration.repartition }}</td>
+                                <td>{{ fouration.ci }}</td>
+
+
+
+
+                                    <td>
+                                        <a class="btn btn-sm btn-warning" href="edit1/{{ fouration.id }}"> <span class="fa fa-edit"></span> Edit</a>
+                                        <a class="btn btn-sm btn-danger" href="delete1/{{ fouration.id }}"><span class="fa fa-trash"></span> Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

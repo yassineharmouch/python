@@ -1,0 +1,148 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">CRUD</a>
+                </li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Crud Add
+                </div>
+                <div class="card-body">
+                  <form class="form-horizontal" action="create2" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="case_debut" placeholder="case debut" id="inputcase" required>
+                                    <label for="inputcase">case debut</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="equipe" placeholder="equipe" id="inputequipe" required>
+                                    <label for="inputequipe">équipe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="son" placeholder="son" id="inputson" required>
+                                    <label for="inputson">son</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="frequence" placeholder="frequence" id="inputfrequence" required>
+                                    <label for="inputfrequence">fréquence</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="vitesse" placeholder="vitesse" id="inputvitesse" required>
+                                    <label for="inputvitesse">vitesse</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="vitesse_vent" placeholder="vitesse_vent" id="inputvitesse_vent" required>
+                                    <label for="inputvitesse_vent">vitesse vent</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="humiditer" placeholder="humiditer" id="inputhumiditer" required>
+                                    <label for="inputhumiditer">humidité</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="temp" placeholder="temp" id="inputtemp" required>
+                                    <label for="inputtemp">temperature</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="taux_abattage" placeholder="taux abattage" id="inputtaux_abattage" required>
+                                    <label for="inputtaux_abattage">taux d'abattage</label>
+                                </div>
+                            </div>
+                  <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="taux_deplacement" placeholder="taux deplacement" id="inputtaux_deplacement" required>
+                                    <label for="inputtaux_deplacement">taux deplacement</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                       <div class="form-group">
+                         <div class="col-md-6">
+                            <label>Type de tir</label>
+
+                            <select name="type_tir"  class="form-control">
+                                <option value="42ms,25ms,17ms">42ms,25ms,17ms</option>
+
+                                {% if fouration.type_tir == "42ms,17ms" %}
+                                <option value="42ms,17ms" selected>42ms,17ms</option>
+                                {% else %}
+                                <option value="42ms,17ms">42ms,17ms</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+                        <div class="form-group">
+                                <label>Num Commande </label>
+                                <select class="form-control" name="numero">
+                                    {% for fouration in fourations %}
+                                        <option value="{{ fourations.id }}">{{ fourations.niveau }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                    </div>
+
+
+
+                    <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

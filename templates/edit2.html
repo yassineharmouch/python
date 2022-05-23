@@ -1,0 +1,136 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">CRUD</a>
+                </li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Crud Add
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" action="update2/{{ sautages.id }}" method="POST">
+                    {% csrf_token %}
+                      <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="case_debut" value="{{ sautages.case_debut }}" placeholder="case debut" id="inputcase" required>
+                                    <label for="inputcase">case debut</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="equipe" value="{{ sautages.equipe }}" placeholder="equipe" id="inputequipe" required>
+                                    <label for="inputequipe">equipe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="son" value="{{ sautages.son }}" placeholder="son" id="inputson" required>
+                                    <label for="inputson">son</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="frequence" value="{{ sautages.frequence }}" placeholder="frequence" id="inputfrequence" required>
+                                    <label for="inputfrequence">frequence</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="vitesse" value="{{ sautages.vitesse }}" placeholder="vitesse" id="inputvitesse" required>
+                                    <label for="inputvitesse">vitesse</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="vitesse_vent" value="{{ sautages.vitesse_vent }}" placeholder="vitesse_vent" id="inputvitesse_vent" required>
+                                    <label for="inputvitesse_vent">vitesse_vent</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="humiditer" value="{{ sautages.humiditer }}" placeholder="humiditer" id="inputhumiditer" required>
+                                    <label for="inputhumiditer">humiditer</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="temp" value="{{ sautages.temp }}" placeholder="temp" id="inputtemp" required>
+                                    <label for="inputtemp">temp</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="taux_abattage" value="{{ sautages.taux_abattage }}" placeholder="taux abattage" id="inputtaux_abattage" required>
+                                    <label for="inputtaux_abattage">taux abattage</label>
+                                </div>
+                            </div>
+                  <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="taux_deplacement" value="{{ sautages.taux_deplacement }}" placeholder="taux deplacement" id="inputtaux_deplacement" required>
+                                    <label for="inputtaux_deplacement">taux deplacement</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                       <div class="form-group">
+                         <div class="col-md-6">
+                            <label>Type de tir</label>
+
+                            <select name="type_tir"  class="form-control">
+                                <option value="42ms,25ms,17ms">42ms,25ms,17ms</option>
+
+                                {% if fouration.type_tir == "42ms,17ms" %}
+                                <option value="42ms,17ms" selected>42ms,17ms</option>
+                                {% else %}
+                                <option value="42ms,17ms">42ms,17ms</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+                    </div>
+
+
+                    <button class="btn btn-primary btn-block" type="submit">Submit&nbsp;<span></span></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

@@ -1,0 +1,314 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">CRUD</a>
+                </li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Crud Add
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" action="update1/{{ fourations.id }}" method="POST">
+                    {% csrf_token %}
+                   <div class="form-group">
+                        <div class="form-row">
+ <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="largeur" value="{{ fourations.largeur }}" placeholder="largeur" id="inputlargeur" required>
+                                    <label for="inputlargeur">largeur</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="nbr_trou_range" value="{{ fourations.nbr_trou_range }}" placeholder="nbr trou range" id="inputrange" required>
+                                    <label for="inputrange">nbr trou range</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="tranche" value="{{ fourations.tranche }}" placeholder="tranche" id="inputtranche" required>
+                                    <label for="inputtranche">tranche</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="profondeur" value="{{ fourations.profondeur }}" placeholder="profondeur" id="inputprofondeur" required>
+                                    <label for="inputprofondeur">profondeur</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="dossage" value="{{ fourations.dossage }}" placeholder="dossage" id="inputdossage" required>
+                                    <label for="inputdossage">dossage</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="nbr_trou" value="{{ fourations.nbr_trou }}" placeholder="nbr de trou" id="inputtrou" required>
+                                    <label for="inputtrou">nbr de trou</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="maille" value="{{ fourations.maille }}" placeholder="maille" id="inputmaille" required>
+                                    <label for="inputmaille">maille</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="longueur" value="{{ fourations.longueur }}" placeholder="longueur" id="inputlongueur" required>
+                                    <label for="inputlongueur">longueur</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="nbr_range" value="{{ fourations.nbr_range }}" placeholder="nbr de range" id="inputnbr_range" required>
+                                    <label for="inputnbr_range">nbr de range</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            <label>Mode de tir</label>
+
+                            <select name="mode_tir"  class="form-control">
+                                <option value="nonel">nonel</option>
+
+                                {% if fouration.gender == "electrique" %}
+                                <option value="electrique" selected>electrique</option>
+                                {% else %}
+                                <option value="electrique">electrique</option>
+                                {% endif %}
+
+                                {% if fouration.gender == "classique" %}
+                                <option value="classique" selected>classique</option>
+                                {% else %}
+                                <option value="classique">classique</option>
+                                {% endif %}
+                            </select>
+                             </div>
+                        </div>
+                    </div>
+
+
+
+                       <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                            <label>Type de tir</label>
+
+                            <select name="type_tir"  class="form-control">
+                                <option value="42ms,25ms,17ms">42ms,25ms,17ms</option>
+
+                                {% if fouration.type_tir == "42ms,17ms" %}
+                                <option value="42ms,17ms" selected>42ms,17ms</option>
+                                {% else %}
+                                <option value="42ms,17ms">42ms,17ms</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+
+                         <div class="col-md-6">
+                            <label>Mode de charge</label>
+
+                            <select name="mode_charge"  class="form-control">
+                                <option value="unique">unique</option>
+
+                                {% if fouration.mode_charge == "etagé" %}
+                                <option value="etagé" selected>etagé</option>
+                                {% else %}
+                                <option value="etagé">etagé</option>
+                                {% endif %}
+                            </select>
+                             </div>
+
+                        </div>
+                      <div class="form-group">
+                        <div class="form-row">
+                         <div class="col-md-6">
+                            <label>niveau</label>
+
+                            <select name="niveau"  class="form-control">
+                                <option value="RT/SB">RT/SB</option>
+
+                                {% if fouration.niveau == "RT/SA2" %}
+                                <option value="RT/SA2" selected>RT/SA2</option>
+                                {% else %}
+                                <option value="RT/SA2">RT/SA2</option>
+                                {% endif %}
+
+
+                            {% if fouration.niveau == "INT1/2" %}
+                                <option value="INT1/2">INT1/2 selected>INT1/2</option>
+                                {% else %}
+                                <option value="INT1/2">INT1/2</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT2/4" %}
+                                <option value="INT2/4" selected>INT2/4</option>
+                                {% else %}
+                                <option value="INT2/4">INT2/4</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT3/4" %}
+                                <option value="INT3/4" selected>INT3/4</option>
+                                {% else %}
+                                <option value="INT3/4">INT3/4</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT3/5" %}
+                                <option value="INT3/5" selected>INT3/5</option>
+                                {% else %}
+                                <option value="INT3/5">INT3/5</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT3/5" %}
+                                <option value="INT3/5" selected>INT3/5</option>
+                                {% else %}
+                                <option value="INT3/5">INT3/5</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT5/6" %}
+                                <option value="INT5/6" selected>INT5/6</option>
+                                {% else %}
+                                <option value="INT5/6">INT5/6</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT4/5" %}
+                                <option value="INT4/5" selected>INT4/5</option>
+                                {% else %}
+                                <option value="INT4/5">INT4/5</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INT2/3" %}
+                                <option value="INT2/3" selected>INT2/3</option>
+                                {% else %}
+                                <option value="INT2/3">INT2/3</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "INTSA2/C0" %}
+                                <option value="INTSA2/C0" selected>INTSA2/C0</option>
+                                {% else %}
+                                <option value="INTSA2/C0">INTSA2/C0</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "RT/C0" %}
+                                <option value="RT/C0" selected>RT/C0</option>
+                                {% else %}
+                                <option value="RT/C0">RT/C0</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "RT/C2" %}
+                                <option value="RT/C2" selected>RT/C2</option>
+                                {% else %}
+                                <option value="RT/C2">RT/C2</option>
+                                {% endif %}
+                            {% if fouration.niveau == "RT/C3" %}
+                                <option value="RT/C3" selected>RT/C3</option>
+                                {% else %}
+                                <option value="RT/C3">RT/C3</option>
+                                {% endif %}
+
+                            {% if fouration.niveau == "RT/C4" %}
+                                <option value="RT/C4" selected>RT/C4</option>
+                                {% else %}
+                                <option value="RT/C4">RT/C4</option>
+                                {% endif %}
+                            {% if fouration.niveau == "RT/C5" %}
+                                <option value="RT/C5" selected>RT/C5</option>
+                                {% else %}
+                                <option value="RT/C5">RT/C5</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+
+                         <div class="col-md-6">
+                            <label>panneau</label>
+
+                            <select name="panneau"  class="form-control">
+                                <option value="P1">P1</option>
+
+                                {% if fouration.panneau == "P2" %}
+                                <option value="P2" selected>P2</option>
+                                {% else %}
+                                <option value="P2">P2</option>
+                                {% endif %}
+                             {% if fouration.panneau == "P3" %}
+                                <option value="P3" selected>P3</option>
+                                {% else %}
+                                <option value="P3">P3</option>
+                                {% endif %}
+                                {% if fouration.panneau == "P4" %}
+                                <option value="P4" selected>P4</option>
+                                {% else %}
+                                <option value="P4">P4</option>
+                                {% endif %}
+                                {% if fouration.panneau == "P5" %}
+                                <option value="P5" selected>P5</option>
+                                {% else %}
+                                <option value="P5">P5</option>
+                                {% endif %}
+                                {% if fouration.panneau == "P6" %}
+                                <option value="P6" selected>P6</option>
+                                {% else %}
+                                <option value="P6">P6</option>
+                                {% endif %}
+                                {% if fouration.panneau == "P7" %}
+                                <option value="P7" selected>P7</option>
+                                {% else %}
+                                <option value="P7">P7</option>
+                                {% endif %}
+                                {% if fouration.panneau == "P8" %}
+                                <option value="P8" selected>P8</option>
+                                {% else %}
+                                <option value="P8">P8</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+                    </div>
+                      </div>
+                       </div>
+
+
+                    <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

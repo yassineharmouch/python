@@ -1,0 +1,89 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">CRUD</a>
+                </li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Crud Add
+                </div>
+                <div class="card-body">
+                  <form class="form-horizontal" action="create3" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="ammonix" placeholder="ammonix" id="inputammonix" required>
+                                    <label for="inputammonix">ammonix</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="tovex" placeholder="tovex" id="inputtovex" required>
+                                    <label for="inputtovex">tovex</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="raccord25ms" placeholder="son" id="inputraccord25ms" required>
+                                    <label for="inputraccord25ms">raccord25ms</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="raccord42ms" placeholder="raccord42ms" id="inputraccord42ms" required>
+                                    <label for="inputraccord42ms">raccord42ms</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="raccord17ms" placeholder="raccord17ms" id="inputraccord17ms" required>
+                                    <label for="inputraccord17ms">raccord17ms</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="cout_global" placeholder="cout_global" id="inputcout_global" required>
+                                    <label for="inputcout_global">cout_global</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}
