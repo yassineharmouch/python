@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+          <a href="{% url 'list1' %}" style="padding: 8px; float: right; background-color: red; color: white;">Back</a>
+                </li>
+            </ol>
+            <div class="card mb-3" >
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Commande des artifices
+
+                </div>
+
+                <div class=""  >
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                 <th style="width:5%">Date</th>
+                                 <th style="width:5%"> Ammonix</th>
+                                 <th style="width:5%">tovex</th>
+                                <th style="width:5%">Raccord17ms</th>
+                                 <th style="width:5%">Raccord25ms</th>
+                                <th style="width:5%">Raccord42ms</th>
+                                 <th style="width:5%">ligne de tir</th>
+                                 <th style="width:5%">A.E.I</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                <td>{{ fourations.created_at |date:"d-m-Y" }}</td>
+                                 <td>{{ fourations.ammonix }}</td>
+                                <td>{{ fourations.tovex }}</td>
+                                <td>{{ fourations.raccord17ms }}</td>
+                                <td>{{ fourations.raccord25ms }}</td>
+                                <td>{{ fourations.raccord42ms }}</td>
+                                <td>{{ fourations.ligne_tir }}</td>
+                                <td>{{ fourations.aei }}</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <form>
+
+      <script>
+         function display() {
+            window.print();
+         }
+      </script>
+                   </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <button onclick="display()"  style="padding: 8px; float: right; background-color: green; color: white;">Imprimer</button>
+
+<style>
+    @media print {
+        button {
+            display: none;
+        }
+        a{
+           display: none;
+        }
+
+    }
+</style>
+
+{% endblock %}

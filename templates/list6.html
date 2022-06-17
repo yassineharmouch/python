@@ -11,13 +11,13 @@
                 <li class="breadcrumb-item">
                     <a href="#">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">CRUD</li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    CRUD List
-                    <a  class="btn btn-sm btn-success" href="" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+                    Cout List
+
                 </div>
                 <div class="card-body">
                     {% for message in messages %}
@@ -30,12 +30,12 @@
                             <thead>
                             <tr>
                                <th>Date</th>
-                                <th>Ammonix</th>
-                                <th>Tovex</th>
-                                <th>RAccord17ms</th>
-                                <th>RAccord25ms</th>
-                                <th>RAccord42ms</th>
-                                <th>ligne de tir</th>
+                                <th>Ammonix/PU</th>
+                                <th>Tovex/PU</th>
+                                <th>RAccord17ms/PU</th>
+                                <th>RAccord25ms/PU</th>
+                                <th>RAccord42ms/PU</th>
+                                <th>ligne de tir/PU</th>
                                 <th>A.E.I</th>
 
                                 <th>cout global</th>
@@ -44,14 +44,14 @@
                             <tbody>
                             {% for fouration in fourations %}
                                 <tr>
-                                    <td>{{ fouration.created_at  |date:"d-m-Y H:i:s" }}</td>
-                                    <td>{{ fouration.cout_ammonix }}</td>
-                                    <td>{{ fouration.cout_tovex }}</td>
-                                    <td>{{ fouration.cout_raccord17ms }}</td>
-                                    <td>{{ fouration.cout_raccord42ms }}</td>
-                                    <td>{{ fouration.cout_raccord25ms }}</td>
-                                    <td>{{ fouration.cout_ligne_tir }}</td>
-                                    <td>{{ fouration.cout_aei }}</td>
+                                    <td>{{ fouration.created_at  |date:"d-m-Y" }}</td>
+                                    <td>{{ fouration.cout_ammonix }} * 9.05 </td>
+                                    <td>{{ fouration.cout_tovex }} * 18.45 </td>
+                                    <td>{{ fouration.cout_raccord17ms }} * 35 </td>
+                                    <td>{{ fouration.cout_raccord42ms }} * 35 </td>
+                                    <td>{{ fouration.cout_raccord25ms }} * 35 </td>
+                                    <td>{{ fouration.cout_ligne_tir }} * 1.25 </td>
+                                    <td>{{ fouration.cout_aei }} * 10 </td>
 
 
 

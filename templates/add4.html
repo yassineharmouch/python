@@ -9,46 +9,85 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">CRUD</a>
+                    <a href="#">Avance</a>
                 </li>
                 <li class="breadcrumb-item active">Add</li>
             </ol>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Crud Add
+                    Avance list
                 </div>
                 <div class="card-body">
                   <form class="form-horizontal" action="create4" method="POST">
                     {% csrf_token %}
-                    <div class="form-group">
+                   <div class="form-group">
                         <div class="form-row">
-                            <div class="col-md-6">
+                        <div class="col-md-6">
+                           <label>Num commande </label>
+                                <select class="form-control" name="fouration">
+                                    {% for fouration in fourations %}
+                                        <option value="{{ fouration.id }}">{{ fouration.num_com }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>machine</label>
+
+                            <select name="machine"  class="form-control">
+                                <option value="7500/1">7500/1</option>
+
+                                {% if fouration.machine == "7500/2" %}
+                                <option value="7500/2" selected>7500/2</option>
+                                {% else %}
+                                <option value="7500/2">7500/2</option>
+                                {% endif %}
+
+
+                            {% if fouration.machine == "PH1" %}
+                                <option value="PH1">PH1 selected>PH1</option>
+                                {% else %}
+                                <option value="PH1">PH1</option>
+                                {% endif %}
+
+                            {% if fouration.machine == "PH2" %}
+                                <option value="PH2" selected>PH2</option>
+                                {% else %}
+                                <option value="PH2">PH2</option>
+                                {% endif %}
+
+                            {% if fouration.machine == "D11" %}
+                                <option value="D11" selected>D11</option>
+                                {% else %}
+                                <option value="D11">D11</option>
+                                {% endif %}
+
+                            {% if fouration.machine == "E.E" %}
+                                <option value="E.E" selected>E.E</option>
+                                {% else %}
+                                <option value="E.E">E.E</option>
+                                {% endif %}
+
+                            </select>
+                             </div>
+                        </div>
+                    </div>
+
+
+                  <div class="form-group">
+                        <div class="form-row">
+
+                        <div class="col-md-6">
                                 <div class="form-label-group">
                                     <input type="text" class="form-control" name="avance_foration" placeholder="Avance foration" id="inputavance_foration" required>
                                     <label for="inputavance_foration">Avance foration</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" class="form-control" name="avance_sautage" placeholder="Avance sautage" id="inputavance_sautage" required>
-                                    <label for="inputavance_sautage">Avance sautage</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                  <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" class="form-control" name="avance_actuel" placeholder="Avance actuel" id="inputavance_actuel" required>
-                                    <label for="inputavance_actuel">Avance actuel</label>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
+
 
 
                     <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>

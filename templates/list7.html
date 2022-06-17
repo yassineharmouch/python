@@ -1,0 +1,106 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">CRUD</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Paramétres  List
+                    <a  class="btn btn-sm btn-success" href="{% url 'create7' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+                </div>
+                <div class="card-body">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                               <th>Date</th>
+                                <th>niveau</th>
+                                <th>panneau</th>
+                                <th>largeur</th>
+                                <th>diametre</th>
+                                <th>tranche</th>
+                                <th>hauteur</th>
+                                <th>dr</th>
+                                <th>de</th>
+                                <th>espacement</th>
+                                 <th>longueur</th>
+
+                                <th>banquette</th>
+                                 <th>ratio</th>
+                                <th>espacement</th>
+                                 <th>bourrage</th>
+                                 <th>nbr trou/range</th>
+                                 <th>mf</th>
+                                 <th>nbr_range</th>
+                                <th>nbr trou</th>
+                                 <th>maille</th>
+                                 <th>volume</th>
+
+
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for pfouration in pfourations %}
+                                <tr>
+                                    <td>{{ pfouration.created_at  |date:"d-m-Y" }}</td>
+
+                                    <td>{{ pfouration.niveau }}</td>
+                                    <td>{{ pfouration.panneau }}</td>
+                                    <td>{{ pfouration.largeur }}</td>
+                                    <td>{{ pfouration.diametre}}</td>
+                                    <td>{{ pfouration.tranche }}</td>
+                                    <td>{{ pfouration.hauteur }}</td>
+                                    <td>{{ pfouration.densite_r }}</td>
+                                    <td>{{ pfouration.de }}</td>
+                                    <td>{{ pfouration.espacement }}</td>
+                                    <td>{{ pfouration.longueur }}</td>
+
+                                     <td>{{ pfouration.banquette }}</td>
+                                     <td>{{ pfouration.ratio }}</td>
+                                     <td>{{ pfouration.espacement1 }}</td>
+                                     <td>{{ pfouration.bourrage }}</td>
+                                     <td>{{ pfouration.nbr_trou_range }}</td>
+                                     <td>{{ pfouration.mf }}</td>
+                                     <td>{{ pfouration.nbr_range }}</td>
+                                     <td>{{ pfouration.nbr_trou_total }}</td>
+                                     <td>{{ pfouration.maille }}</td>
+                                     <td>{{ pfouration.volume }}</td>
+
+
+                                    <td>
+                                        <a class="btn btn-sm btn-warning" href="edit7/{{ pfouration.id }}"> <span class="fa fa-edit"></span> Edit</a>
+                                        <a class="btn btn-sm btn-danger" href="delete7/{{ pfouration.id }}"><span class="fa fa-trash"></span> Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

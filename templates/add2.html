@@ -9,18 +9,29 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">CRUD</a>
+                    <a href="#">Ajouter</a>
                 </li>
-                <li class="breadcrumb-item active">Add</li>
+                <li class="breadcrumb-item active">Ajouter</li>
             </ol>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Crud Add
+                    Apres sautage
                 </div>
                 <div class="card-body">
                   <form class="form-horizontal" action="create2" method="POST">
                     {% csrf_token %}
+                  <div class="form-group">
+                        <div class="form-row">
+                           <label>Num commande </label>
+                                <select class="form-control" name="fouration">
+                                    {% for fouration in fourations %}
+                                        <option value="{{ fouration.id }}">{{ fouration.num_com }}</option>
+                                    {% endfor %}
+                                </select>
+
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
@@ -50,6 +61,34 @@
                                 <div class="form-label-group">
                                     <input type="text" class="form-control" name="frequence" placeholder="frequence" id="inputfrequence" required>
                                     <label for="inputfrequence">fréquence</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="nammonix" placeholder="N B.L.F AMMONIX" id="inputnammonix" required>
+                                    <label for="inputnammonix">N B.L.F AMMONIX</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="ntovex" placeholder="N B.L.F TOVEX" id="inputntovex" required>
+                                    <label for="inputntovex">N B.L.F TOVEX</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="nartifice" placeholder="N B.L.F ARTIFICE" id="inputnartifice" required>
+                                    <label for="inputnartifice">N B.L.F ARTIFICE</label>
                                 </div>
                             </div>
                         </div>
@@ -106,6 +145,7 @@
                         </div>
                     </div>
 
+
                        <div class="form-group">
                          <div class="col-md-6">
                             <label>Type de tir</label>
@@ -121,14 +161,7 @@
 
                             </select>
                              </div>
-                        <div class="form-group">
-                                <label>Num Commande </label>
-                                <select class="form-control" name="numero">
-                                    {% for fouration in fourations %}
-                                        <option value="{{ fourations.id }}">{{ fourations.niveau }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+
                     </div>
 
 

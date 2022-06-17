@@ -1,0 +1,68 @@
+{% extends 'layout/app.html' %}
+
+{% load static %}
+{% block body %}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">CRUD</li>
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Stock Actuel
+                    </div>
+                <div class="card-body">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Ammonix</th>
+                                <th>Tovex</th>
+                                <th>RAccord17ms</th>
+                                <th>RAccord25ms</th>
+                                <th>RAccord42ms</th>
+                                <th>ligne de tir</th>
+                                <th>A.E.I</th>
+
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for fouration in fourations %}
+                                <tr>
+                                    <td>{{ fouration.created_at  |date:"d-m-Y" }}</td>
+                                    <td>{{ fouration.rammonix }}</td>
+                                    <td>{{ fouration.rtovex }}</td>
+                                    <td>{{ fouration.araccord17ms }}</td>
+                                    <td>{{ fouration.araccord25ms }}</td>
+                                    <td>{{ fouration.araccord42ms }}</td>
+                                    <td>{{ fouration.rligne_tir }}</td>
+                                    <td>{{ fouration.raei }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

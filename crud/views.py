@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Member, Document, Ajax, CsvUpload,Fourations,Sautage,Cout,Avance,Stock
+from .models import Member, Document, Ajax, CsvUpload,Fourations,Sautage,Avance,Stock,Pfourations
 import datetime
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
@@ -15,7 +15,32 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    fouration_count = Fourations.objects.all().count()
+    stock_count = Stock.objects.all().count()
+
+    fouration_count1 = Fourations.objects.filter(profondeur='20').count()
+    stock_count1 = Stock.objects.filter(ammonix='20').count()
+
+    labels = []
+    data = []
+
+    queryset = Fourations.objects.order_by('-dossage')[:5]
+    for fouration in queryset:
+        labels.append(fouration.machine)
+        data.append(fouration.dossage)
+
+
+    context = {
+        "fouration_count": fouration_count,
+        "stock_count": stock_count,
+        "fouration_count1": fouration_count1,
+        "stock_count1": stock_count1,
+        "labels": labels,
+        "data": data,
+
+    }
+
+    return render(request, 'index.html' , context)
 
 
 @login_required
@@ -66,11 +91,11 @@ def update(request, id):
     member = Member.objects.get(id=id)
     member.firstname = request.POST['firstname']
     member.lastname = request.POST['lastname']
-    member.mobile_number = request.POST['mobile_number'],
-    member.description = request.POST['description'],
-    member.location = request.POST['location'],
-    member.date = request.POST['date'],
-    member.gender = request.POST['gender'],
+    member.mobile_number = request.POST['mobile_number']
+    member.description = request.POST['description']
+    member.location = request.POST['location']
+    member.date = request.POST['date']
+    member.gender = request.POST['gender']
     member.save()
     messages.success(request, 'Member was updated successfully!')
     return redirect('/list')
@@ -81,6 +106,20 @@ def delete(request, id):
     member.delete()
     messages.error(request, 'Member was deleted successfully!')
     return redirect('/list')
+
+
+@login_required
+def list8(request):
+    fourations_list = Fourations.objects.all()
+    paginator = Paginator(fourations_list, 5)
+    page = request.GET.get('page')
+    try:
+        fourations = paginator.page(page)
+    except PageNotAnInteger:
+        fourations = paginator.page(1)
+    except EmptyPage:
+        fourations = paginator.page(paginator.num_pages)
+    return render(request, 'list8.html', {'fourations': fourations})
 
 
 @login_required
@@ -100,6 +139,7 @@ def list6(request):
 @login_required
 def list1(request):
     fourations_list = Fourations.objects.all()
+    stocks_list = Stock.objects.all()
     paginator = Paginator(fourations_list, 5)
     page = request.GET.get('page')
     try:
@@ -108,12 +148,36 @@ def list1(request):
         fourations = paginator.page(1)
     except EmptyPage:
         fourations = paginator.page(paginator.num_pages)
-    return render(request, 'list1.html', {'fourations': fourations})
+    return render(request, 'list1.html', {'fourations': fourations,
+                                          'stocks':stocks_list })
 
 @login_required
 def create1(request):
     if request.method == 'POST':
+        stock_id = request.POST.get('stocks')
+        stocks = Stock.objects.get(id=stock_id)
+        observation= request.POST.get('observation')
+        num_com = request.POST.get('num_com')
+        machine = request.POST.get('machine')
+        dossage = request.POST.get('dossage')
+        profondeur = request.POST.get('profondeur')
+        tranche = request.POST.get('tranche')
+        nbr_trou_range = request.POST.get('nbr_trou_range')
+        largeur = request.POST.get('largeur')
+        panneau = request.POST.get('panneau')
+        niveau = request.POST.get('niveau')
+        type_tir = request.POST.get('type_tir')
+        mode_tir = request.POST.get('mode_tir')
+        mode_charge = request.POST.get('mode_charge')
+        nbr_trou = request.POST.get('nbr_trou')
+        maille = request.POST.get('maille')
+        longueur = request.POST.get('longueur')
+        nbr_range = request.POST.get('nbr_range')
+
         fouration = Fourations(
+            num_com=request.POST['num_com'],
+            observation=request.POST['observation'],
+            machine=request.POST['machine'],
             mode_tir=request.POST['mode_tir'],
             type_tir=request.POST['type_tir'],
             mode_charge=request.POST['mode_charge'],
@@ -134,11 +198,30 @@ def create1(request):
             fouration.full_clean()
         except ValidationError as e:
             pass
+        fouration = Fourations(stock_id=stocks, nbr_range=nbr_range, longueur=longueur, maille=maille,
+                          nbr_trou=nbr_trou, dossage=dossage, profondeur=profondeur,
+                          tranche=tranche, nbr_trou_range=nbr_trou_range, largeur=largeur, panneau=panneau,observation=observation,
+                      niveau=niveau, mode_charge=mode_charge ,type_tir=type_tir,machine=machine,num_com=num_com,mode_tir=mode_tir)
         fouration.save()
         messages.success(request, 'Fourations was created successfully!')
         return redirect('/list1')
     else:
-        return render(request, 'add1.html')
+
+        stocks_list = Stock.objects.all()
+        return render(request, 'add1.html' ,  {
+                   'stocks': stocks_list,
+
+
+                   })
+
+@login_required
+def show1(request, id):
+    fourations= Fourations.objects.get(id=id)
+    context = {'fourations': fourations}
+    return render(request, 'show1.html', context)
+
+
+
 
 @login_required
 def edit1(request, id):
@@ -150,21 +233,23 @@ def edit1(request, id):
 @login_required
 def update1(request, id):
     fouration = Fourations.objects.get(id=id)
-
-    fouration.mode_tir = request.POST['mode_tir'],
-    fouration.type_tir = request.POST['type_tir'],
-    fouration.mode_charge = request.POST['mode_charge'],
-    fouration.niveau = request.POST['niveau'],
-    fouration.panneau = request.POST['panneau'],
-    fouration.largeur = request.POST['largeur'],
-    fouration.nbr_trou_range = request.POST['nbr_trou_range'],
-    fouration.tranche = request.POST['tranche'],
-    fouration.profondeur = request.POST['profondeur'],
-    fouration.dossage = request.POST['dossage'],
-    fouration.nbr_trou = request.POST['nbr_trou'],
-    fouration.maille = request.POST['maille'],
-    fouration.longueur = request.POST['longueur'],
-    fouration.nbr_range = request.POST['nbr_range'],
+    fouration.num_com = request.POST['num_com']
+    fouration.observation = request.POST['observation']
+    fouration.machine = request.POST['machine']
+    fouration.mode_tir = request.POST['mode_tir']
+    fouration.type_tir = request.POST['type_tir']
+    fouration.mode_charge = request.POST['mode_charge']
+    fouration.niveau = request.POST['niveau']
+    fouration.panneau = request.POST['panneau']
+    fouration.largeur = request.POST['largeur']
+    fouration.nbr_trou_range = request.POST['nbr_trou_range']
+    fouration.tranche = request.POST['tranche']
+    fouration.profondeur = request.POST['profondeur']
+    fouration.dossage = request.POST['dossage']
+    fouration.nbr_trou = request.POST['nbr_trou']
+    fouration.maille = request.POST['maille']
+    fouration.longueur = request.POST['longueur']
+    fouration.nbr_range = request.POST['nbr_range']
     fouration.save()
     messages.success(request, 'Fourations was updated successfully!')
     return redirect('/list1')
@@ -181,6 +266,7 @@ def delete1(request, id):
 @login_required
 def list2(request):
     sautages_list = Sautage.objects.all()
+    fourations_list = Fourations.objects.all()
     paginator = Paginator(sautages_list, 5)
     page = request.GET.get('page')
     try:
@@ -189,34 +275,62 @@ def list2(request):
         sautages = paginator.page(1)
     except EmptyPage:
         sautages = paginator.page(paginator.num_pages)
-    return render(request, 'list2.html', {'sautages': sautages})
+    return render(request, 'list2.html',
+                  {'sautages': sautages,
+                   'fourations': fourations_list
+                   })
 
 @login_required
 def create2(request):
     if request.method == 'POST':
+        fouration_id = request.POST.get('fouration')
+        fouration = Fourations.objects.get(id=fouration_id)
+        type_tir  =  request.POST.get('type_tir')
+        case_debut = request.POST.get('case_debut')
+        equipe = request.POST.get('equipe')
+        son = request.POST.get('son')
+        frequence = request.POST.get('frequence')
+        vitesse = request.POST.get('vitesse')
+        vitesse_vent = request.POST.get('vitesse_vent')
+        humiditer = request.POST.get('humiditer')
+        temp = request.POST.get('temp')
+        taux_abattage = request.POST.get('taux_abattage')
+        taux_deplacement = request.POST.get('taux_deplacement')
+        nammonix = request.POST.get('nammonix')
+        ntovex = request.POST.get('ntovex')
+        nartifice = request.POST.get('nartifice')
+
         sautage = Sautage(
-            type_tir=request.POST['type_tir'],
-            case_debut=request.POST['case_debut'],
-            equipe=request.POST['equipe'],
-            son=request.POST['son'],
-            frequence=request.POST['frequence'],
-            vitesse=request.POST['vitesse'],
-            vitesse_vent=request.POST['vitesse_vent'],
-            humiditer=request.POST['humiditer'],
-            temp=request.POST['temp'],
-            taux_abattage=request.POST['taux_abattage'],
-            taux_deplacement=request.POST['taux_deplacement'],
+            fouration_id=fouration,
+            type_tir=type_tir,
+            case_debut=request.POST.get('case_debut'),
+            equipe=request.POST.get('equipe'),
+            son=request.POST.get('son'),
+            frequence=request.POST.get('frequence'),
+            vitesse=request.POST.get('vitesse'),
+            vitesse_vent=request.POST.get('vitesse_vent'),
+            humiditer=request.POST.get('humiditer'),
+            temp=request.POST.get('temp'),
+            taux_abattage=request.POST.get('taux_abattage'),
+            taux_deplacement=request.POST.get('taux_deplacement'),
+            nammonix=request.POST.get('nammonix'),
+            ntovex=request.POST.get('ntovex'),
+            nartifice=request.POST.get('nartifice'),
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now(), )
         try:
             sautage.full_clean()
         except ValidationError as e:
             pass
+        sautage = Sautage(nartifice=nartifice,ntovex=ntovex,nammonix=nammonix,fouration_id=fouration,type_tir=type_tir,case_debut=case_debut,equipe=equipe,taux_deplacement=taux_deplacement,taux_abattage=taux_abattage,temp=temp,humiditer=humiditer,vitesse_vent=vitesse_vent,vitesse=vitesse,frequence=frequence,son=son)
         sautage.save()
         messages.success(request, 'Sautage was created successfully!')
         return redirect('/list2')
     else:
-        return render(request, 'add2.html')
+        fourations_list = Fourations.objects.all()
+        return render(request, 'add2.html',  {
+                   'fourations': fourations_list
+                   })
 
 @login_required
 def edit2(request, id):
@@ -228,21 +342,23 @@ def edit2(request, id):
 @login_required
 def update2(request, id):
     sautage = Sautage.objects.get(id=id)
-    sautage.type_tir = request.POST['type_tir'],
-    sautage.case_debut = request.POST['case_debut'],
-    sautage.equipe = request.POST['equipe'],
-    sautage.son = request.POST['son'],
-    sautage.frequence = request.POST['frequence'],
-    sautage.vitesse = request.POST['vitesse'],
-    sautage.vitesse_vent = request.POST['vitesse_vent'],
-    sautage.humiditer = request.POST['humiditer'],
-    sautage.temp = request.POST['temp'],
-    sautage.taux_abattage = request.POST['taux_abattage'],
-    sautage.taux_deplacement = request.POST['taux_deplacement'],
+    sautage.type_tir = request.POST['type_tir']
+    sautage.case_debut = request.POST['case_debut']
+    sautage.equipe = request.POST['equipe']
+    sautage.son = request.POST['son']
+    sautage.frequence = request.POST['frequence']
+    sautage.vitesse = request.POST['vitesse']
+    sautage.vitesse_vent = request.POST['vitesse_vent']
+    sautage.humiditer = request.POST['humiditer']
+    sautage.temp = request.POST['temp']
+    sautage.taux_abattage = request.POST['taux_abattage']
+    sautage.taux_deplacement = request.POST['taux_deplacement']
+    sautage.nammonix = request.POST['nammonix']
+    sautage.ntovex = request.POST['ntovex']
+    sautage.nartifice = request.POST['nartifice']
     sautage.save()
     messages.success(request, 'Sautage was updated successfully!')
     return redirect('/list2')
-
 @login_required
 def delete2(request, id):
     sautage = Sautage.objects.get(id=id)
@@ -254,74 +370,9 @@ def delete2(request, id):
 
 
 @login_required
-def list3(request):
-    couts_list = Cout.objects.all()
-    paginator = Paginator(couts_list, 5)
-    page = request.GET.get('page')
-    try:
-        couts = paginator.page(page)
-    except PageNotAnInteger:
-        couts = paginator.page(1)
-    except EmptyPage:
-        couts = paginator.page(paginator.num_pages)
-    return render(request, 'list3.html', {'couts': couts})
-
-@login_required
-def create3(request):
-    if request.method == 'POST':
-        cout = Cout(
-            ammonix=request.POST['ammonix'],
-            tovex=request.POST['tovex'],
-            raccord42ms=request.POST['raccord42ms'],
-            raccord17ms=request.POST['raccord17ms'],
-            raccord25ms=request.POST['raccord25ms'],
-            cout_global=request.POST['cout_global'],
-            created_at=datetime.datetime.now(),
-            updated_at=datetime.datetime.now(), )
-        try:
-            cout.full_clean()
-        except ValidationError as e:
-            pass
-        cout.save()
-        messages.success(request, 'Cout was created successfully!')
-        return redirect('/list3')
-    else:
-        return render(request, 'add3.html')
-
-@login_required
-def edit3(request, id):
-    couts = Cout.objects.get(id=id)
-    context = {'couts': couts}
-    return render(request, 'edit3.html', context)
-
-
-@login_required
-def update3(request, id):
-    cout = Cout.objects.get(id=id)
-    cout.ammonix = request.POST['ammonix'],
-    cout.tovex = request.POST['tovex'],
-    cout.raccord42ms = request.POST['raccord42ms'],
-    cout.raccord17ms = request.POST['raccord17ms'],
-    cout.raccord25ms = request.POST['raccord25ms'],
-    cout.cout_global = request.POST['cout_global'],
-    cout.save()
-    messages.success(request, 'Cout was updated successfully!')
-    return redirect('/list3')
-
-@login_required
-def delete3(request, id):
-    cout = Cout.objects.get(id=id)
-    cout.delete()
-    messages.error(request, 'Cout was deleted successfully!')
-    return redirect('/list3')
-
-
-
-
-
-@login_required
 def list4(request):
     avances_list = Avance.objects.all()
+    fourations_list = Fourations.objects.all()
     paginator = Paginator(avances_list, 5)
     page = request.GET.get('page')
     try:
@@ -330,15 +381,20 @@ def list4(request):
         avances = paginator.page(1)
     except EmptyPage:
         avances = paginator.page(paginator.num_pages)
-    return render(request, 'list4.html', {'avances': avances})
+    return render(request, 'list4.html', {'avances': avances,
+                                          'fourations':fourations_list})
 
 @login_required
 def create4(request):
     if request.method == 'POST':
+        fouration_id = request.POST.get('fouration')
+        fouration = Fourations.objects.get(id=fouration_id)
+        avance_foration = request.POST.get('avance_foration')
+        machine = request.POST.get('machine')
         avance = Avance(
+            fouration_id=fouration,
             avance_foration=request.POST['avance_foration'],
-            avance_sautage=request.POST['avance_sautage'],
-            avance_actuel=request.POST['avance_actuel'],
+            machine=request.POST['machine'],
 
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now(), )
@@ -346,11 +402,15 @@ def create4(request):
             avance.full_clean()
         except ValidationError as e:
             pass
+        avance = Avance(fouration_id=fouration, avance_foration=avance_foration,machine=machine)
         avance.save()
         messages.success(request, 'Avance was created successfully!')
         return redirect('/list4')
     else:
-        return render(request, 'add4.html')
+        fourations_list = Fourations.objects.all()
+        return render(request, 'add4.html' , {
+                   'fourations': fourations_list
+                   })
 
 @login_required
 def edit4(request, id):
@@ -362,9 +422,8 @@ def edit4(request, id):
 @login_required
 def update4(request, id):
     avance = Avance.objects.get(id=id)
-    avance.avance_foration = request.POST['avance_foration'],
-    avance.avance_sautage = request.POST['avance_sautage'],
-    avance.avance_actuel = request.POST['avance_actuel'],
+    avance.avance_foration = request.POST['avance_foration']
+
     avance.save()
     messages.success(request, 'Avance was updated successfully!')
     return redirect('/list4')
@@ -396,11 +455,14 @@ def list5(request):
 def create5(request):
     if request.method == 'POST':
         stock = Stock(
+            num_stock=request.POST['num_stock'],
             ammonix=request.POST['ammonix'],
             tovex=request.POST['tovex'],
             raccord42ms=request.POST['raccord42ms'],
             raccord17ms=request.POST['raccord17ms'],
             raccord25ms=request.POST['raccord25ms'],
+            ligne_tir=request.POST['ligne_tir'],
+            aei=request.POST['aei'],
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now(), )
         try:
@@ -422,12 +484,15 @@ def edit5(request, id):
 
 @login_required
 def update5(request, id):
-    stock = Stockobjects.get(id=id)
-    stock.ammonix = request.POST['ammonix'],
-    stock.tovex = request.POST['tovex'],
-    stock.raccord42ms = request.POST['raccord42ms'],
-    stock.raccord17ms = request.POST['raccord17ms'],
-    stock.raccord25ms = request.POST['raccord25ms'],
+    stock = Stock.objects.get(id=id)
+    stock.num_stock = request.POST['num_stock']
+    stock.ammonix = request.POST['ammonix']
+    stock.tovex = request.POST['tovex']
+    stock.raccord42ms = request.POST['raccord42ms']
+    stock.raccord17ms = request.POST['raccord17ms']
+    stock.raccord25ms = request.POST['raccord25ms']
+    stock.ligne_tir = request.POST['ligne_tir']
+    stock.aei = request.POST['aei']
     stock.save()
     messages.success(request, 'Stock was updated successfully!')
     return redirect('/list5')
@@ -629,3 +694,74 @@ def deleteFiles(request, id):
     file.delete()
     messages.error(request, 'User was deleted successfully!')
     return redirect('/fileupload')
+
+
+@login_required
+def list7(request):
+    pfourations_list = Pfourations.objects.all()
+    paginator = Paginator(pfourations_list, 5)
+    page = request.GET.get('page')
+    try:
+        pfourations = paginator.page(page)
+    except PageNotAnInteger:
+        pfourations = paginator.page(1)
+    except EmptyPage:
+        pfourations = paginator.page(paginator.num_pages)
+    return render(request, 'list7.html', {'pfourations': pfourations})
+
+@login_required
+def create7(request):
+    if request.method == 'POST':
+        pfouration = Pfourations(
+            densite_r=request.POST['densite_r'],
+            niveau=request.POST['niveau'],
+            panneau=request.POST['panneau'],
+            largeur=request.POST['largeur'],
+            tranche=request.POST['tranche'],
+            diametre=request.POST['diametre'],
+            de=request.POST['de'],
+            hauteur=request.POST['hauteur'],
+            longueur=request.POST['longueur'],
+            espacement=request.POST['espacement'],
+            created_at=datetime.datetime.now(),
+            updated_at=datetime.datetime.now(), )
+        try:
+            pfouration.full_clean()
+        except ValidationError as e:
+            pass
+        pfouration.save()
+        messages.success(request, 'Fourations was created successfully!')
+        return redirect('/list7')
+    else:
+        return render(request, 'add7.html')
+
+@login_required
+def edit7(request, id):
+    pfourations = Pfourations.objects.get(id=id)
+    context = {'pfourations': pfourations}
+    return render(request, 'edit7.html', context)
+
+
+@login_required
+def update7(request, id):
+    pfouration = Pfourations.objects.get(id=id)
+
+    pfouration.niveau = request.POST['niveau']
+    pfouration.panneau = request.POST['panneau']
+    pfouration.largeur = request.POST['largeur']
+    pfouration.diametre = request.POST['diametre']
+    pfouration.tranche = request.POST['tranche']
+    pfouration.de = request.POST['de']
+    pfouration.espacement = request.POST['espacement']
+    pfouration.hauteur = request.POST['hauteur']
+    pfouration.longueur = request.POST['longueur']
+    pfouration.save()
+    messages.success(request, 'Fourations was updated successfully!')
+    return redirect('/list7')
+
+@login_required
+def delete7(request, id):
+    pfouration = Pfourations.objects.get(id=id)
+    pfouration.delete()
+    messages.error(request, 'Fourations was deleted successfully!')
+    return redirect('/list7')

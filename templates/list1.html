@@ -11,12 +11,12 @@
                 <li class="breadcrumb-item">
                     <a href="#">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">CRUD</li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    CRUD List
+                    Parametres  List
                     <a  class="btn btn-sm btn-success" href="{% url 'create1' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
                 </div>
                 <div class="card-body">
@@ -30,7 +30,8 @@
                             <thead>
                             <tr>
                                <th>Date</th>
-
+                                <th>Num commande</th>
+                                <th>machine</th>
                                 <th>mode de tir</th>
                                 <th>type de tir</th>
                                 <th>mode de charge</th>
@@ -60,6 +61,9 @@
                                  <th>dosage_r</th>
                                  <th>repartition</th>
                                  <th>ci</th>
+                                <th>Num Stock</th>
+                                <th>rendement</th>
+
 
                                 <th>Action</th>
                             </tr>
@@ -67,7 +71,9 @@
                             <tbody>
                             {% for fouration in fourations %}
                                 <tr>
-                                    <td>{{ fouration.created_at  |date:"d-m-Y H:i:s" }}</td>
+                                    <td>{{ fouration.created_at  |date:"d-m-Y" }}</td>
+                                    <td>{{ fouration.num_com }}</td>
+                                    <td>{{ fouration.machine }}</td>
                                     <td>{{ fouration.mode_tir }}</td>
                                     <td>{{ fouration.type_tir }}</td>
                                     <td>{{ fouration.mode_charge }}</td>
@@ -97,11 +103,14 @@
                                 <td>{{ fouration.dosage_r }}</td>
                                 <td>{{ fouration.repartition }}</td>
                                 <td>{{ fouration.ci }}</td>
+                                <td>{{ fouration.stock_id.num_stock }}</td>
+                                <td>{{ fouration.rendement }}</td>
 
 
 
 
                                     <td>
+                                        <a class="btn btn-sm btn-success" href="show1/{{ fouration.id }}"> <span class="fas fa-adjust"></span> Show</a>
                                         <a class="btn btn-sm btn-warning" href="edit1/{{ fouration.id }}"> <span class="fa fa-edit"></span> Edit</a>
                                         <a class="btn btn-sm btn-danger" href="delete1/{{ fouration.id }}"><span class="fa fa-trash"></span> Delete</a>
                                     </td>

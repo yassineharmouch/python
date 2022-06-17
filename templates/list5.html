@@ -28,6 +28,7 @@
                             <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Num Stock</th>
                                 <th>Ammonix</th>
                                 <th>Tovex</th>
                                 <th>RAccord17ms</th>
@@ -43,16 +44,19 @@
                             <tbody>
                             {% for stock in stocks %}
                                 <tr>
-                                    <td>{{ stock.created_at  |date:"d-m-Y H:i:s" }}</td>
+                                    <td>{{ stock.created_at  |date:"d-m-Y" }}</td>
+                                    <td>{{ stock.num_stock }}</td>
                                     <td>{{ stock.ammonix }}</td>
                                     <td>{{ stock.tovex }}</td>
                                     <td>{{ stock.raccord17ms }}</td>
                                     <td>{{ stock.raccord25ms }}</td>
                                     <td>{{ stock.raccord42ms }}</td>
+                                    <td>{{ stock.ligne_tir }}</td>
+                                    <td>{{ stock.aei }}</td>
 
 
                                     <td>
-                                        <a class="btn btn-sm btn-warning" href="edi5/{{ stock.id }}"> <span class="fa fa-edit"></span> Edit</a>
+                                        <a class="btn btn-sm btn-warning" href="edit5/{{ stock.id }}"> <span class="fa fa-edit"></span> Edit</a>
                                         <a class="btn btn-sm btn-danger" href="delete5/{{ stock.id }}"><span class="fa fa-trash"></span> Delete</a>
                                     </td>
                                 </tr>
